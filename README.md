@@ -7,7 +7,7 @@ echo "Hello World" | 2slack
 ```
 
 ## Usage
-```json
+```bash
 usage: 2slack [<flags>] [<message>]
 
 Flags:
@@ -25,14 +25,14 @@ Args:
 ```
 
 # Installation
-You find releases in [Github Releases](releases) section.
+You find releases in [Github Releases](https://github.com/Eun/2slack/releases) section.
 
 Or you can use `go get`:
 ```bash
 go get github.com/Eun/2slack
 ```
 
-You can find instructions for slack [here](slack/README.md)
+You can find instructions for slack [here](slack/README.md).
 
 # Examples
 
