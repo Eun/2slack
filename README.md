@@ -44,10 +44,10 @@ date | 2slack --channel=Channel1 --token=MySlackToken --title=Title --color=ff00
 ## Using environment variables
 ```bash
 
-export SLACK_CHANNEL = Channel1
-export SLACK_TOKEN = MySlackToken
-export SLACK_TITLE = Date
-export SLACK_COLOR = green
+export SLACK_CHANNEL=Channel1
+export SLACK_TOKEN=MySlackToken
+export SLACK_TITLE=Date
+export SLACK_COLOR=green
 
 date | 2slack
 2slack "Hello World!"
