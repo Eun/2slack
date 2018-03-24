@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"io"
+	"net/url"
 	"os"
 	"strings"
 
@@ -11,17 +12,19 @@ import (
 )
 
 var (
-	channelFlag  = kingpin.Flag("channel", "Slack Channel Name or ID").Short('c').Strings()
-	tokenFlag    = kingpin.Flag("token", "Slack token").Short('t').String()
-	titleFlag    = kingpin.Flag("title", "Message title").String()
-	footerFlag   = kingpin.Flag("footer", "Footer to use").String()
-	colorFlag    = kingpin.Flag("color", "Message color").String()
-	usernameFlag = kingpin.Flag("username", "Username to use").String()
-	messageArg   = kingpin.Arg("message", "Message text").String()
+	channelFlag   = kingpin.Flag("channel", "Slack Channel Name or ID").Short('c').Strings()
+	tokenFlag     = kingpin.Flag("token", "Slack token").Short('t').String()
+	titleFlag     = kingpin.Flag("title", "Message title").String()
+	footerFlag    = kingpin.Flag("footer", "Footer to use").String()
+	colorFlag     = kingpin.Flag("color", "Message color").String()
+	usernameFlag  = kingpin.Flag("username", "Username to use").String()
+	iconEmojiFlag = kingpin.Flag("icon_emoji", "Emoji to use as the icon").String()
+	iconURLFlag   = kingpin.Flag("icon_url", "URL to an image to use as the icon").URL()
+	messageArg    = kingpin.Arg("message", "Text of the message to send").String()
 )
 
 func main() {
-	kingpin.Version("1.0.0")
+	kingpin.Version("1.1.ß")
 	kingpin.Parse()
 
 	if channelFlag == nil || len(*channelFlag) <= 0 {
@@ -89,6 +92,25 @@ func main() {
 		}
 	}
 	*usernameFlag = strings.TrimSpace(*usernameFlag)
+
+	if iconEmojiFlag == nil || len(*iconEmojiFlag) <= 0 {
+		iconEmojiFlag = new(string)
+		if env := os.Getenv("SLACK_ICON_EMOJI"); len(env) > 0 {
+			*iconEmojiFlag = env
+		} else {
+			*iconEmojiFlag = ""
+		}
+	}
+	*iconEmojiFlag = strings.TrimSpace(*iconEmojiFlag)
+
+	if iconURLFlag == nil || *iconURLFlag == nil || len((*iconURLFlag).String()) <= 0 {
+		if env := os.Getenv("SLACK_ICON_URL"); len(env) > 0 {
+			parsedUrl, err := url.Parse(strings.TrimSpace(env))
+			if err == nil && parsedUrl != nil {
+				iconURLFlag = &parsedUrl
+			}
+		}
+	}
 
 	// read message
 	if messageArg == nil || len(*messageArg) <= 0 {
@@ -172,6 +194,14 @@ func main() {
 
 	if len(*usernameFlag) > 0 {
 		parameters.Username = *usernameFlag
+	}
+
+	if len(*iconEmojiFlag) > 0 {
+		parameters.IconEmoji = *iconEmojiFlag
+	}
+
+	if iconURLFlag != nil && *iconURLFlag != nil && len((*iconURLFlag).String()) > 0 {
+		parameters.IconURL = (*iconURLFlag).String()
 	}
 
 	for i := 0; i < len(channelIDs); i++ {

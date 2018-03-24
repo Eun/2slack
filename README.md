@@ -11,17 +11,20 @@ echo "Hello World" | 2slack
 usage: 2slack [<flags>] [<message>]
 
 Flags:
-      --help                 Show context-sensitive help (also try --help-long and --help-man).
-  -c, --channel=CHANNEL ...  Slack Channel Name or ID
-  -t, --token=TOKEN          Slack token
-      --title=TITLE          Message title
-      --footer=FOOTER        Footer to use
-      --color=COLOR          Message color
-      --username=USERNAME    Username to use
-      --version              Show application version.
+      --help                   Show context-sensitive help (also try --help-long and --help-man).
+  -c, --channel=CHANNEL ...    Slack Channel Name or ID
+  -t, --token=TOKEN            Slack token
+      --title=TITLE            Message title
+      --footer=FOOTER          Footer to use
+      --color=COLOR            Message color
+      --username=USERNAME      Username to use
+      --icon_emoji=ICON_EMOJI  Emoji to use as the icon
+      --icon_url=ICON_URL      URL to an image to use as the icon
+      --version                Show application version.
 
 Args:
-  [<message>]  Message text
+  [<message>]  Text of the message to send
+
 ```
 
 # Installation
@@ -48,7 +51,26 @@ export SLACK_CHANNEL=Channel1
 export SLACK_TOKEN=MySlackToken
 export SLACK_TITLE=Date
 export SLACK_COLOR=green
+export SLACK_USERNAME=2slack
 
 date | 2slack
 2slack "Hello World!"
 ```
+
+## List of environment variables
+|--------------------|------------------------|
+| Name               | Commandline Equivalent |
+|--------------------|------------------------|
+| `SLACK_CHANNEL`    | `channel`              |
+| `SLACK_TOKEN`      | `token`                |
+| `SLACK_TITLE`      | `title`                |
+| `SLACK_FOOTER`     | `footer`               |
+| `SLACK_COLOR`      | `color`                |
+| `SLACK_USERNAME`   | `username`             |
+| `SLACK_ICON_EMOJI` | `icon_emoji`           |
+| `SLACK_ICON_URL`   | `icon_url`             |
+
+
+# Changelog
+1.1.0: Added icon_emoji & icon_url
+1.0.0: Initial release
