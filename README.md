@@ -72,4 +72,5 @@ date | 2slack
 
 # Changelog
 1.1.0: Added icon_emoji & icon_url
+
 1.0.0: Initial release
