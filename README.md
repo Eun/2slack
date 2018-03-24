@@ -58,7 +58,6 @@ date | 2slack
 ```
 
 ## List of environment variables
-|--------------------|------------------------|
 | Name               | Commandline Equivalent |
 |--------------------|------------------------|
 | `SLACK_CHANNEL`    | `channel`              |
