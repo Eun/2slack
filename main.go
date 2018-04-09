@@ -20,11 +20,12 @@ var (
 	usernameFlag  = kingpin.Flag("username", "Username to use").String()
 	iconEmojiFlag = kingpin.Flag("icon_emoji", "Emoji to use as the icon").String()
 	iconURLFlag   = kingpin.Flag("icon_url", "URL to an image to use as the icon").URL()
+	teeModeFlag   = kingpin.Flag("tee", "Tee mode (pipe stdin to stdout)").Bool()
 	messageArg    = kingpin.Arg("message", "Text of the message to send").String()
 )
 
 func main() {
-	kingpin.Version("1.1.ß")
+	kingpin.Version("1.2.1")
 	kingpin.Parse()
 
 	if channelFlag == nil || len(*channelFlag) <= 0 {
@@ -115,7 +116,12 @@ func main() {
 	// read message
 	if messageArg == nil || len(*messageArg) <= 0 {
 		var builder strings.Builder
-		_, err := io.Copy(&builder, os.Stdin)
+		var err error
+		if *teeModeFlag == true {
+			_, err = io.Copy(io.MultiWriter(&builder, os.Stdout), os.Stdin)
+		} else {
+			_, err = io.Copy(&builder, os.Stdin)
+		}
 		if err != nil {
 			fmt.Println(err)
 			os.Exit(1)

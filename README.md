@@ -20,6 +20,7 @@ Flags:
       --username=USERNAME      Username to use
       --icon_emoji=ICON_EMOJI  Emoji to use as the icon
       --icon_url=ICON_URL      URL to an image to use as the icon
+      --tee                    Tee mode (pipe stdin to stdout)
       --version                Show application version.
 
 Args:
@@ -71,6 +72,7 @@ date | 2slack
 
 
 # Changelog
-1.1.0: Added icon_emoji & icon_url
+1.2.1: Added `tee` mode
+1.2.0: Added `icon_emoji` & `icon_url`
 
 1.0.0: Initial release
